@@ -21,8 +21,7 @@ public class Organizer {
 		String  f = null ;
 		while(b.readLine()!= null) {
 			f=b.readLine();
-				fligths.add(new Flight(f,"Ramdom",fligths.size(),0, Date.dateTurning()));
-				//fligths.add(new Flight(f[0],f[1],Integer.parseInt(f[2]),Integer.parseInt(f[3]),Integer.parseInt(f[4]),Date.dateTurning(f[5])));
+				fligths.add(new Flight(f,"Ramdom",fligths.size()+1));
 		}
 	}
 	public void generateList(int r) {
