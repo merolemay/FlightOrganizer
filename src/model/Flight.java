@@ -4,9 +4,8 @@ import java.util.Comparator;
 
 public class Flight implements Comparable <Flight>,Comparator<Flight> {
 	
-	private String flightname,airline, destination,hour;
-	private String serialNumber;
-	private Date date;
+	private String flightname,airline, destination,hour,serialNumber,gate;
+	private  Date date;
 	
 	
 	public Flight(String flightname, String airline, int sj, String destination) {
@@ -16,6 +15,7 @@ public class Flight implements Comparable <Flight>,Comparator<Flight> {
 		serialNumber = "B0F0"+sj;
 		hour = setARamdonHour();
 		date = Date.dateTurning();
+		gate = "Gate:"+(int)(Math.random()* 6)+1;
 	}
 
 	public String getFlightname() {
@@ -73,5 +73,9 @@ public class Flight implements Comparable <Flight>,Comparator<Flight> {
 	@Override
 	public int compareTo(Flight o) {
 		return o.getFlightname().compareTo(flightname);
+	}
+
+	public String getGate() {
+		return gate;
 	}
 }

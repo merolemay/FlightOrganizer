@@ -45,12 +45,11 @@ public class Organizer {
 		b.close();
 		c.close();
 	}
-	public Flight[] generateList(int r) {
-		showfligths = new Flight[r]; 
+	public void generateList(int r) {
+		this.showfligths = new Flight[r]; 
 		for (int i=0;i<showfligths.length-1;i++) {
-			showfligths[i] = fligths.get(i);
+			this.showfligths[i] = fligths.get(i);
 		}
-		return showfligths;
 	}
 	
 	public static void InsercionAirplaneNames(Flight[] vector) {
