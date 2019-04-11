@@ -56,6 +56,6 @@ public class Flight implements Comparable <Flight>,Comparator<Flight> {
 
 	@Override
 	public int compareTo(Flight o) {
-		return o.getSerialNumber()-serialNumber;
+		return o.getAirline().compareTo(airline);
 	}
 }

@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public class Organizer {
 	
-	public final static String PATH_PLANENAMES ="./data/FligthsRegister.txt";
-	public final static String PATH_AIRLINES ="./data/FligthsRegister.txt";
-	public final static String PATH_CITYESDESTINATIONS ="./data/FligthsRegister.txt";
+	public final static String PATH_PLANENAMES ="./data/planenames.txt";
+	public final static String PATH_AIRLINES ="./data/airlinesnames.txt";
+	public final static String PATH_CITYESDESTINATIONS ="./data/destinationsname.txt";
 	
 	private ArrayList <Flight> fligths;
 	private Flight [] showfligths;
@@ -38,19 +38,21 @@ public class Organizer {
 	      for (int i=1; i < vector.length; i++) {
 	         Flight aux = vector[i];
 	         int j;
-	         for (j=i-1; j >=0 && (Integer.parseInt(vector[j].getFlightname()) ) > (Integer.parseInt(aux.getFlightname())); j--){
+	         for (j=i-1; j >=0 && vector[j].getHour()>aux.getHour(); j--){
 	              vector[j+1] = vector[j];
 	          }
 	         vector[j+1] = aux;
 	      }
 	   }
 	
-	public static void Seleccion(int[]matrix){
-        int i, j, k, p, buffer, limit = matrix.length-1;
+	public static void Seleccion(Flight[]matrix){
+        int i, j, k, p, limit = matrix.length-1;
+		Flight buffer;
         for(k = 0; k < limit; k++){
             p = k;
             for(i = k+1; i <= limit; i++){
-                if(matrix[i] < matrix[p]) p = i;
+                if(true ) 
+                	p = i;
                 if(p != k){
                     buffer = matrix[p];
                     matrix[p] = matrix[k];
