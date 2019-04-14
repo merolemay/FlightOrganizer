@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Organizer {
 	
@@ -17,28 +18,46 @@ public class Organizer {
 	public Organizer () {
 		fligths = new ArrayList<Flight>();
 	}
-	public void loadFIle() throws IOException {
-		FileReader r = new FileReader(PATH_PLANENAMES);
-		BufferedReader b = new BufferedReader(r);
-		String  f = null ;
-		while(b.readLine()!= null) {
-			f=b.readLine();
-				fligths.add(new Flight(f,"Ramdom",fligths.size()+1, f));
-		}
-		b.close();
+	
+	public Flight[] getShowfligths() {
+		return showfligths;
 	}
-	public void generateList(int r) {
+	public ArrayList<Flight> getFligths() {
+		return fligths;
+	}
+	public void loadFIle() throws IOException {
+		FileReader x = new FileReader(PATH_PLANENAMES);
+		FileReader y = new FileReader( PATH_AIRLINES);
+		FileReader z = new FileReader(PATH_CITYESDESTINATIONS);
+		BufferedReader a = new BufferedReader(x);
+		BufferedReader b = new BufferedReader(y);
+		BufferedReader c = new BufferedReader(z);
+		String  f = "";
+		String m ="";
+		String q="";
+		while(a.readLine()!= null && b.readLine()!= null && c.readLine()!= null) {
+			f=a.readLine();
+			m=b.readLine();
+			q=c.readLine();
+			fligths.add(new Flight(f,m,fligths.size()+1, q));
+		}
+		a.close();
+		b.close();
+		c.close();
+	}
+	public Flight[] generateList(int r) {
 		showfligths = new Flight[r]; 
 		for (int i=0;i<showfligths.length-1;i++) {
 			showfligths[i] = fligths.get(i);
 		}
+		return showfligths;
 	}
 	
-	public static void Insercion (Flight[] vector) {
+	public static void InsercionAirplaneNames(Flight[] vector) {
 	      for (int i=1; i < vector.length; i++) {
 	         Flight aux = vector[i];
 	         int j;
-	         for (j=i-1; j >=0 && vector[j].getHour()>aux.getHour(); j--){
+	         for (j=i-1; j >=0 && vector[j].compareTo(aux)>1; j--){
 	              vector[j+1] = vector[j];
 	          }
 	         vector[j+1] = aux;
@@ -46,7 +65,7 @@ public class Organizer {
 	   }
 	
 	public static void Seleccion(Flight[]matrix){
-        int i, j, k, p, limit = matrix.length-1;
+        int i, k, p, limit = matrix.length-1;
 		Flight buffer;
         for(k = 0; k < limit; k++){
             p = k;
@@ -73,5 +92,4 @@ public class Organizer {
             }
         }
     }
-
 }

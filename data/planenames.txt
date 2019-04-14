@@ -30,3 +30,21 @@ Airbus A319
 Boeing B-747
 Airbus A300
 Boeing B-737
+Team Tango Foxtrot
+Bell 525
+Douglas DC8-63
+Douglas DC-8-55
+Douglas  DC-8-52
+Douglas DC-2
+De Havilland DH90-A
+De Havilland DH89-A
+De Havilland Canada DHC-8
+Convair 440 Metropolitan
+Caravelle XI
+Caravelle X
+Caravelle VI-R
+Douglas DC8-63
+Douglas DC-8-55
+Douglas  DC-8-52
+Douglas DC-2
+De Havilland DH90-A
