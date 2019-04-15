@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
 public class Organizer {
 	
@@ -13,19 +13,20 @@ public class Organizer {
 	public final static String PATH_CITYESDESTINATIONS ="./data/destinationsname.txt";
 	
 	private ArrayList <Flight> fligths;
-	private Flight [] showfligths;
+	private ArrayList <Flight> showfligths;
 	
 	public Organizer () {
 		fligths = new ArrayList<Flight>();
+		showfligths = new ArrayList<Flight>();
 	}
 	
-	public Flight[] getShowfligths() {
+	public ArrayList<Flight> getShowfligths() {
 		return showfligths;
 	}
 	public ArrayList<Flight> getFligths() {
 		return fligths;
 	}
-	public void loadFIle() throws IOException {
+	public void loadFile() throws IOException {
 		FileReader x = new FileReader(PATH_PLANENAMES);
 		FileReader y = new FileReader( PATH_AIRLINES);
 		FileReader z = new FileReader(PATH_CITYESDESTINATIONS);
@@ -46,21 +47,34 @@ public class Organizer {
 		c.close();
 	}
 	public void generateList(int r) {
-		this.showfligths = new Flight[r]; 
-		for (int i=0;i<showfligths.length-1;i++) {
-			this.showfligths[i] = fligths.get(i);
+		showfligths.clear();
+		for(int i =0;i<r;i++) {
+			if(r>25)
+			showfligths.add(new Flight(fligths.get((int)(Math.random()* i)).getFlightname(),fligths.get((int)(Math.random()* i)).getAirline(),r,fligths.get((int)(Math.random()* i)).getDestination()));
+			else if(r<25)
+			showfligths.add(fligths.get((int)(Math.random()* r)));
 		}
+		Collections.sort(showfligths);
 	}
 	
-	public static void InsercionAirplaneNames(Flight[] vector) {
-	      for (int i=1; i < vector.length; i++) {
+	public  void sortByserialNumber(ArrayList<Flight> e) {
+		Flight[] vector = new Flight[e.size()];
+		for(int l=0;l<e.size();l++) {
+			vector[l]=e.get(l);
+		}
+	      for (int i=1; i < vector.length-1; i++) {
 	         Flight aux = vector[i];
 	         int j;
-	         for (j=i-1; j >=0 && vector[j].compareTo(aux)>1; j--){
+	         for (j=i-1; j >=0 && vector[j].compareTo(aux)<1; j--){
 	              vector[j+1] = vector[j];
 	          }
 	         vector[j+1] = aux;
 	      }
+	      for(int n=0;n<vector.length-1;n++) {
+	    	  	showfligths.clear();
+				showfligths.add(vector[n]);
+			}
+	      
 	   }
 	
 	public static void Seleccion(Flight[]matrix){
@@ -91,4 +105,5 @@ public class Organizer {
             }
         }
     }
+
 }

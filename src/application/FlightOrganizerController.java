@@ -2,16 +2,16 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -20,93 +20,105 @@ import model.Flight;
 import model.Organizer;
 
 public class FlightOrganizerController implements Initializable{
-	
+
 	private Organizer organizer;
 
-
     @FXML
-    private TableView<Flight[]> tableOfFlights;
-
-    @FXML
-    private ComboBox<String> searchBox;
-
-    @FXML
-    private ComboBox<String> sortBox;
+    private TableView<Flight> tableOfFlights;
 
     @FXML
     private TextField listTextField;
+
+
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		organizer = new Organizer();
 		try {
-			organizer.loadFIle();
-			organizer.generateList(10);
-			System.out.println((organizer.getFligths()));
-			this.showTable();
+			organizer.loadFile();
+			showTable();
 		} catch (IOException e) {
 		}
+		
+
+		
 	}
 	
-	public void generatorButton() {
+	public void generatorButton(ActionEvent a) {
+		try {
 		organizer.generateList(Integer.parseInt(listTextField.getText()));
-		this.showTable();
+		this.generateNewTable();
+		} catch(NumberFormatException e) {
+			JOptionPane.showMessageDialog(null,"Only numbers please.");
+		}
 	}
 	
 	public void sortByName() {
 	}
 	
 	public void sortByDate() {
+		Collections.sort(organizer.getShowfligths());
+		this.generateNewTable();
 	}
 	
-	public void sortBySerialNumber() {
+	public void eraseList(ActionEvent a){
+		tableOfFlights.getItems().clear();
 	}
 	
-	public void sortByHour() {
+	public void sortBySerialNumber(ActionEvent a) {
+		Collections.sort(organizer.getShowfligths());
+		this.generateNewTable();
 	}
 	
+	public void sortByAirline(ActionEvent a) {
+		organizer.sortByserialNumber(organizer.getShowfligths());
+		this.generateNewTable();
+	}
 	
+	public void generateNewTable() {
+		tableOfFlights.getItems().clear();
+		ObservableList<Flight> data = FXCollections.observableArrayList(organizer.getShowfligths());
+		tableOfFlights.setItems(data);
+	}
+	
+	@SuppressWarnings("unchecked")
 	public void showTable() {
 
-		ObservableList<Flight[]> data = null;
-		data.add(organizer.getShowfligths());
+		ObservableList<Flight> data = FXCollections.observableArrayList(organizer.getShowfligths());
 
-		tableOfFlights.setEditable(true);
-		tableOfFlights.setMinWidth(390);
+		
 
-		TableColumn airplanecol = new TableColumn("Airplane");
+		TableColumn<Flight, String> airplanecol = new TableColumn<Flight, String>("Airplane");
 		airplanecol.setCellValueFactory(new PropertyValueFactory<Flight, String>("flightname"));
 		airplanecol.setMinWidth(140);
 		
-		TableColumn airlinecol = new TableColumn("Airline");
+		TableColumn<Flight, String> airlinecol = new TableColumn<Flight, String>("Airline");
 		airlinecol.setCellValueFactory(new PropertyValueFactory<Flight, String>("airline"));
 		airlinecol.setMinWidth(140);
 		
-		TableColumn destinatnionColo = new TableColumn("Destination");
+		TableColumn<Flight, String> destinatnionColo = new TableColumn<Flight, String>("Destination");
 		destinatnionColo.setCellValueFactory(new PropertyValueFactory<Flight, String>("destination"));
 		destinatnionColo.setMinWidth(100);
 		
-		TableColumn serialNumberCol = new TableColumn("Serial Code");
+		TableColumn<Flight, String> serialNumberCol = new TableColumn<Flight, String>("Serial Code");
 		serialNumberCol.setCellValueFactory(new PropertyValueFactory<Flight, String>("serialNumber"));
 		serialNumberCol.setMinWidth(100);
 
-		TableColumn hourCol = new TableColumn("Flight Hour");
+		TableColumn<Flight, String> hourCol = new TableColumn<Flight, String>("Flight Hour");
 		hourCol.setCellValueFactory(new PropertyValueFactory<Flight, String>("hour"));
 		hourCol.setMinWidth(100);
 		
-		TableColumn dateCol = new TableColumn("Date");
+		TableColumn<Flight, String> dateCol = new TableColumn<Flight, String>("Date");
 		dateCol.setCellValueFactory(new PropertyValueFactory<Flight, String>("date"));
 		dateCol.setMinWidth(100);
 		
-		TableColumn gateCol = new TableColumn("Gate");
+		TableColumn<Flight, String> gateCol = new TableColumn<Flight, String>("Gate");
 		gateCol.setCellValueFactory(new PropertyValueFactory<Flight, String>("gate"));
 		gateCol.setMinWidth(100);
 		
+		//tableOfFlights.set
 		tableOfFlights.setItems(data);
-		tableOfFlights.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		tableOfFlights.getColumns().addAll(airplanecol, airlinecol, destinatnionColo,serialNumberCol,hourCol,dateCol,gateCol);
 		
 	}
-
-
 }

@@ -12,10 +12,10 @@ public class Flight implements Comparable <Flight>,Comparator<Flight> {
 		this.flightname = flightname;
 		this.airline = airline;
 		this.destination=destination;
-		serialNumber = "B0F0"+sj;
+		serialNumber = "B0F0"+(int)(Math.random()* sj);
 		hour = setARamdonHour();
 		date = Date.dateTurning();
-		gate = "Gate:"+(int)(Math.random()* 6)+1;
+		gate = "Gate:"+((int)(Math.random()* 6)+1);
 	}
 
 	public String getFlightname() {
@@ -46,11 +46,12 @@ public class Flight implements Comparable <Flight>,Comparator<Flight> {
 		String ramdonhour="";
 		n= (int)(Math.random()* 24)+1;
 		if (n<12)
-			ramdonhour = n+":AM";
+			ramdonhour = n+":00:AM";
 		else if(n>12) {
 			n-=12;
-			ramdonhour = n+":PM";
-		}
+			ramdonhour = n+":00:PM";
+		} else
+			ramdonhour =n+":00:PM";
 		return ramdonhour;	
 	}
 
@@ -72,7 +73,7 @@ public class Flight implements Comparable <Flight>,Comparator<Flight> {
 	}
 	@Override
 	public int compareTo(Flight o) {
-		return o.getFlightname().compareTo(flightname);
+		return o.getAirline().compareTo(airline);
 	}
 
 	public String getGate() {
