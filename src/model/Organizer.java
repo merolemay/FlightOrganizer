@@ -14,12 +14,29 @@ public class Organizer {
 	
 	private ArrayList <Flight> fligths;
 	private ArrayList <Flight> showfligths;
+	private Flight first;
+	private Flight last;
+	private int totalflights;
 	
 	public Organizer () {
 		fligths = new ArrayList<Flight>();
 		showfligths = new ArrayList<Flight>();
 	}
 	
+	public void addFlight(Flight est) {
+		if (first == null) {
+			first = est;
+		} else {
+			Flight siguiente = first;
+			while (siguiente.getNext() != null) {
+				siguiente = siguiente.getNext();
+			}
+			siguiente.setNext(est);
+			est.setBefore(siguiente);
+			setLast(est);
+		}
+		totalflights++;
+	}
 	public ArrayList<Flight> getShowfligths() {
 		return showfligths;
 	}
@@ -49,7 +66,7 @@ public class Organizer {
 	public void generateList(int r) {
 		showfligths.clear();
 		for(int i =0;i<r;i++) {
-			if(r>25)
+			if(r>=25)
 			showfligths.add(new Flight(fligths.get((int)(Math.random()* i)).getFlightname(),fligths.get((int)(Math.random()* i)).getAirline(),r,fligths.get((int)(Math.random()* i)).getDestination()));
 			else if(r<25)
 			showfligths.add(fligths.get((int)(Math.random()* r)));
@@ -57,33 +74,17 @@ public class Organizer {
 		Collections.sort(showfligths);
 	}
 	
-	public  void sortByserialNumber(ArrayList<Flight> e) {
-		Flight[] vector = new Flight[e.size()];
+	public void sortByGate(ArrayList <Flight> e) {
+		Flight[] matrix = new Flight[e.size()];
 		for(int l=0;l<e.size();l++) {
-			vector[l]=e.get(l);
+			matrix[l]=e.get(l);
 		}
-	      for (int i=1; i < vector.length-1; i++) {
-	         Flight aux = vector[i];
-	         int j;
-	         for (j=i-1; j >=0 && vector[j].compareTo(aux)<1; j--){
-	              vector[j+1] = vector[j];
-	          }
-	         vector[j+1] = aux;
-	      }
-	      for(int n=0;n<vector.length-1;n++) {
-	    	  	showfligths.clear();
-				showfligths.add(vector[n]);
-			}
-	      
-	   }
-	
-	public static void Seleccion(Flight[]matrix){
-        int i, k, p, limit = matrix.length-1;
+        int i, k, p, limit = matrix.length;
 		Flight buffer;
         for(k = 0; k < limit; k++){
             p = k;
-            for(i = k+1; i <= limit; i++){
-                if(true ) 
+            for(i = k+1; i < limit; i++){
+                if(matrix[p].getGate().compareTo(matrix[i].getGate())>0) 
                 	p = i;
                 if(p != k){
                     buffer = matrix[p];
@@ -92,18 +93,123 @@ public class Organizer {
                 }
             }
         }
+    	showfligths.clear();
+	      for(int n=0;n<matrix.length;n++) {
+				showfligths.add(matrix[n]);
+			}
+	}
+	public  void sortByserialNumber(ArrayList<Flight> e) {
+		Flight[] vector = new Flight[e.size()];
+		for(int l=0;l<e.size();l++) {
+			vector[l]=e.get(l);
+		}
+	      for (int i=1; i < vector.length; i++) {
+	         Flight aux = vector[i];
+	         int j;
+	         for (j=i-1; j >=0 && vector[j].getSerialNumber().compareTo(aux.getSerialNumber())>0; j--){
+	              vector[j+1] = vector[j];
+	          }
+	         vector[j+1] = aux;
+	      }
+	  	showfligths.clear();
+	      for(int n=0;n<vector.length;n++) {
+				showfligths.add(vector[n]);
+			}
+	      
+	   }
+	public  void sortByHour(ArrayList<Flight> e) {
+		Flight[] vector = new Flight[e.size()];
+		for(int l=0;l<e.size();l++) {
+			vector[l]=e.get(l);
+		}
+	      for (int i=1; i < vector.length; i++) {
+	         Flight aux = vector[i];
+	         int j;
+	         for (j=i-1; j >=0 && vector[j].getHour().compareTo(aux.getHour())>0; j--){
+	              vector[j+1] = vector[j];
+	          }
+	         vector[j+1] = aux;
+	      }
+	  	showfligths.clear();
+	      for(int n=0;n<vector.length;n++) {
+				showfligths.add(vector[n]);
+			}
+	      
+	   }
+	
+	public  void sortByPlane() {		
+		Collections.sort(showfligths);
+	   }
+	
+	public  void sortByAirline(ArrayList<Flight> e){
+		Flight[] vector = new Flight[e.size()];
+		for(int l=0;l<e.size();l++) {
+			vector[l]=e.get(l);
+		}
+	      for (int i=1; i < vector.length; i++) {
+	         Flight aux = vector[i];
+	         int j;
+	         for (j=i-1; j >=0 && vector[j].getAirline().compareTo(aux.getAirline())>0; j--){
+	              vector[j+1] = vector[j];
+	          }
+	         vector[j+1] = aux;
+	      }
+	  	showfligths.clear();
+	      for(int n=0;n<vector.length;n++) {
+				showfligths.add(vector[n]);
+			}
+	      
     }
-	public static void burbuja(int[]matrix){
-        int temp;
+	public  void sortByDate(ArrayList<Flight> e) {
+		Flight[] vector = new Flight[e.size()];
+		for(int l=0;l<e.size();l++) {
+			vector[l]=e.get(l);
+		}
+	      for (int i=1; i < vector.length; i++) {
+	         Flight aux = vector[i];
+	         int j;
+	         for (j=i-1; j >=0 && vector[j].getDate().compareTo(aux.getDate())>0; j--){
+	              vector[j+1] = vector[j];
+	          }
+	         vector[j+1] = aux;
+	      }
+	  	showfligths.clear();
+	      for(int n=0;n<vector.length;n++) {
+				showfligths.add(vector[n]);
+			}
+	      
+	   }
+	public  void sortByDestination(ArrayList <Flight> e){
+		Flight[] matrix = new Flight[e.size()];
+		for(int l=0;l<e.size();l++) {
+			matrix[l]=e.get(l);
+		}
+        Flight temp;
         for(int i=1;i < matrix.length;i++){
             for (int j=0 ; j < matrix.length- 1; j++){
-                if (matrix[j] > matrix[j+1]){
+                if (matrix[j].getDestination().compareTo(matrix[j+1].getDestination())>0){
                     temp = matrix[j];
                     matrix[j] = matrix[j+1];
                     matrix[j+1] = temp;
                 }
             }
         }
+      	showfligths.clear();
+	      for(int n=0;n<matrix.length;n++) {
+				showfligths.add(matrix[n]);
+			}
     }
+
+	public Flight getLast() {
+		return last;
+	}
+
+	public void setLast(Flight last) {
+		this.last = last;
+	}
+
+	public int getTotalflights() {
+		return totalflights;
+	}
 
 }

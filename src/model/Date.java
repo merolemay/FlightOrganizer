@@ -1,6 +1,6 @@
 package model;
 
-public class Date {
+public class Date  {
 	private int day,month,year;
 	
 
@@ -58,4 +58,20 @@ public class Date {
         sb.append(year);
         return sb.toString();
     }
+
+	public int compareTo(Date date) {
+		int flag=0;
+		if(this.month==date.getMonth()) {
+			if(this.getDay()==date.getDay())
+				flag=0;
+		 if(this.getDay()>date.getDay())
+			flag=1;
+		else
+			flag=-1;
+		} else if(this.month>date.month)
+			flag=1;
+		else
+			flag=-1;
+		return flag;
+		}
 }

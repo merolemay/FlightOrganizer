@@ -2,7 +2,6 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -47,18 +46,24 @@ public class FlightOrganizerController implements Initializable{
 	public void generatorButton(ActionEvent a) {
 		try {
 		organizer.generateList(Integer.parseInt(listTextField.getText()));
-		this.generateNewTable();
+		this.refreshTable();
 		} catch(NumberFormatException e) {
 			JOptionPane.showMessageDialog(null,"Only numbers please.");
 		}
 	}
 	
-	public void sortByName() {
+	public void sortByPlaneName(ActionEvent e) {
+		organizer.sortByPlane();
+		this.refreshTable();
 	}
 	
 	public void sortByDate() {
-		Collections.sort(organizer.getShowfligths());
-		this.generateNewTable();
+		organizer.sortByDate(organizer.getShowfligths());
+		this.refreshTable();
+	}
+	public void sortByHour(ActionEvent e) {
+		organizer.sortByHour(organizer.getShowfligths());
+		this.refreshTable();
 	}
 	
 	public void eraseList(ActionEvent a){
@@ -66,20 +71,32 @@ public class FlightOrganizerController implements Initializable{
 	}
 	
 	public void sortBySerialNumber(ActionEvent a) {
-		Collections.sort(organizer.getShowfligths());
-		this.generateNewTable();
+		organizer.sortByserialNumber(organizer.getShowfligths());
+		this.refreshTable();
 	}
 	
 	public void sortByAirline(ActionEvent a) {
-		organizer.sortByserialNumber(organizer.getShowfligths());
-		this.generateNewTable();
+		organizer.sortByAirline(organizer.getShowfligths());
+		this.refreshTable();
+	}
+	public void sortBygate(ActionEvent a) {
+		organizer.sortByGate(organizer.getShowfligths());
+		organizer.sortByGate(organizer.getShowfligths());
+		this.refreshTable();
+	}
+	public void sortByDestinaition(ActionEvent a) {
+		organizer.sortByDestination(organizer.getShowfligths());
+		this.refreshTable();
+	
 	}
 	
-	public void generateNewTable() {
+	
+	public void refreshTable() {
 		tableOfFlights.getItems().clear();
 		ObservableList<Flight> data = FXCollections.observableArrayList(organizer.getShowfligths());
 		tableOfFlights.setItems(data);
 	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public void showTable() {
@@ -116,7 +133,6 @@ public class FlightOrganizerController implements Initializable{
 		gateCol.setCellValueFactory(new PropertyValueFactory<Flight, String>("gate"));
 		gateCol.setMinWidth(100);
 		
-		//tableOfFlights.set
 		tableOfFlights.setItems(data);
 		tableOfFlights.getColumns().addAll(airplanecol, airlinecol, destinatnionColo,serialNumberCol,hourCol,dateCol,gateCol);
 		

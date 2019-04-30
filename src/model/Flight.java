@@ -6,16 +6,19 @@ public class Flight implements Comparable <Flight>,Comparator<Flight> {
 	
 	private String flightname,airline, destination,hour,serialNumber,gate;
 	private  Date date;
-	
+	private Flight next;
+	private Flight before;
 	
 	public Flight(String flightname, String airline, int sj, String destination) {
 		this.flightname = flightname;
 		this.airline = airline;
 		this.destination=destination;
-		serialNumber = "B0F0"+(int)(Math.random()* sj);
+		serialNumber = ""+(char)((Math.random()*25)+65)+""+(int)((Math.random()*9)+1)+""+(char)((Math.random()*25)+65)+(int)((Math.random()*9)+1)+"";
 		hour = setARamdonHour();
 		date = Date.dateTurning();
 		gate = "Gate:"+((int)(Math.random()* 6)+1);
+		setNext(null);
+		setBefore(null);
 	}
 
 	public String getFlightname() {
@@ -60,23 +63,41 @@ public class Flight implements Comparable <Flight>,Comparator<Flight> {
 		int r=0;
 		if(f1.getSerialNumber()==f2.getSerialNumber())
 			r=0;
-		else if(f1.getSerialNumber().compareToIgnoreCase( f2.getSerialNumber())>1)
+		else if(f1.getSerialNumber().compareTo(f2.getSerialNumber())<1)
 			r=1;
 		else
 			r=-1;
 		
 		return r;
 	}
+	
 	public String toString() {
 		String msj="Plane Name:"+flightname+" Aerline:"+airline+" Serialnumber:"+serialNumber+"\n";
 		return msj;	
 	}
+	
 	@Override
 	public int compareTo(Flight o) {
-		return o.getAirline().compareTo(airline);
+		return flightname.compareTo(o.getFlightname());
 	}
 
 	public String getGate() {
 		return gate;
+	}
+
+	public Flight getNext() {
+		return next;
+	}
+
+	public void setNext(Flight next) {
+		this.next = next;
+	}
+
+	public Flight getBefore() {
+		return before;
+	}
+
+	public void setBefore(Flight before) {
+		this.before = before;
 	}
 }
