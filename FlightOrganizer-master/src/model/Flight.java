@@ -6,7 +6,8 @@ public class Flight implements Comparable <Flight>,Comparator<Flight> {
 	
 	private String flightname,airline, destination,hour,serialNumber,gate;
 	private  Date date;
-	
+	private Flight next;
+	private Flight before;
 	
 	public Flight(String flightname, String airline, int sj, String destination) {
 		this.flightname = flightname;
@@ -16,6 +17,8 @@ public class Flight implements Comparable <Flight>,Comparator<Flight> {
 		hour = setARamdonHour();
 		date = Date.dateTurning();
 		gate = "Gate:"+((int)(Math.random()* 6)+1);
+		setNext(null);
+		setBefore(null);
 	}
 
 	public String getFlightname() {
@@ -80,5 +83,21 @@ public class Flight implements Comparable <Flight>,Comparator<Flight> {
 
 	public String getGate() {
 		return gate;
+	}
+
+	public Flight getNext() {
+		return next;
+	}
+
+	public void setNext(Flight next) {
+		this.next = next;
+	}
+
+	public Flight getBefore() {
+		return before;
+	}
+
+	public void setBefore(Flight before) {
+		this.before = before;
 	}
 }

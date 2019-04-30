@@ -80,9 +80,13 @@ public class FlightOrganizerController implements Initializable{
 		this.refreshTable();
 	}
 	public void sortBygate(ActionEvent a) {
-
+		organizer.sortByGate(organizer.getShowfligths());
+		organizer.sortByGate(organizer.getShowfligths());
+		this.refreshTable();
 	}
 	public void sortByDestinaition(ActionEvent a) {
+		organizer.sortByDestination(organizer.getShowfligths());
+		this.refreshTable();
 	
 	}
 	
