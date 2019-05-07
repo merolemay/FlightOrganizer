@@ -53,11 +53,11 @@ public class Organizer {
 		String  f = "";
 		String m ="";
 		String q="";
-		while(a.readLine()!= null && b.readLine()!= null && c.readLine()!= null) {
+		while((a.readLine()!= null) && (b.readLine()!= null) && (c.readLine()!= null)) {
 			f=a.readLine();
 			m=b.readLine();
 			q=c.readLine();
-			fligths.add(new Flight(f,m,fligths.size()+1, q));
+			fligths.add(new Flight(f,m,q));
 		}
 		a.close();
 		b.close();
@@ -66,10 +66,8 @@ public class Organizer {
 	public void generateList(int r) {
 		showfligths.clear();
 		for(int i =0;i<r;i++) {
-			if(r>=25)
-			showfligths.add(new Flight(fligths.get((int)(Math.random()* i)).getFlightname(),fligths.get((int)(Math.random()* i)).getAirline(),r,fligths.get((int)(Math.random()* i)).getDestination()));
-			else if(r<25)
-			showfligths.add(fligths.get((int)(Math.random()* r)));
+			Flight rf = new Flight(fligths.get((int)(Math.random()*fligths.size())).getFlightname(),fligths.get((int)(Math.random()* fligths.size())).getAirline(),fligths.get((int)(Math.random()* fligths.size())).getDestination());
+			showfligths.add(rf);
 		}
 		Collections.sort(showfligths);
 	}
@@ -125,7 +123,7 @@ public class Organizer {
 	      for (int i=1; i < vector.length; i++) {
 	         Flight aux = vector[i];
 	         int j;
-	         for (j=i-1; j >=0 && vector[j].getHour().compareTo(aux.getHour())>0; j--){
+	         for (j=i-1; j >=0 && vector[j].compareToh(aux)>0; j--){
 	              vector[j+1] = vector[j];
 	          }
 	         vector[j+1] = aux;

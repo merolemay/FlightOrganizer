@@ -9,7 +9,7 @@ public class Flight implements Comparable <Flight>,Comparator<Flight> {
 	private Flight next;
 	private Flight before;
 	
-	public Flight(String flightname, String airline, int sj, String destination) {
+	public Flight(String flightname, String airline, String destination) {
 		this.flightname = flightname;
 		this.airline = airline;
 		this.destination=destination;
@@ -19,6 +19,34 @@ public class Flight implements Comparable <Flight>,Comparator<Flight> {
 		gate = "Gate:"+((int)(Math.random()* 6)+1);
 		setNext(null);
 		setBefore(null);
+	}
+
+	public void setFlightname(String flightname) {
+		this.flightname = flightname;
+	}
+
+	public void setAirline(String airline) {
+		this.airline = airline;
+	}
+
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+	public void setHour(String hour) {
+		this.hour = hour;
+	}
+
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
+	}
+
+	public void setGate(String gate) {
+		this.gate = gate;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public String getFlightname() {
@@ -79,6 +107,19 @@ public class Flight implements Comparable <Flight>,Comparator<Flight> {
 	@Override
 	public int compareTo(Flight o) {
 		return flightname.compareTo(o.getFlightname());
+	}
+	
+	public int compareToh(Flight o) {
+		String r= o.getHour();
+		int m=0;
+		if(hour.substring(hour.length()-1,hour.length()).equals(r.substring(r.length()-1,r.length())))
+			m = hour.compareTo(o.getHour());
+		else if (hour.substring(hour.length()-1,hour.length()).equals("AM")) {
+			m=-1;
+		}
+		else 
+			m=1;
+		return m;
 	}
 
 	public String getGate() {
